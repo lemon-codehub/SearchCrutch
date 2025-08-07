@@ -104,12 +104,12 @@ class OptionsManager {
             </div>
             <div class="form-group">
                 <label>名称</label>
-                <input type="text" placeholder="如: 知乎" value="${engine?.name || ''}" 
+                <input type="text" placeholder="搜索引擎名称" value="${engine?.name || ''}" 
                        data-index="${index}" data-field="name">
             </div>
             <div class="form-group">
                 <label>网址</label>
-                <input type="text" placeholder="如: https://www.zhihu.com/search?type=content&q=%s" 
+                <input type="text" placeholder="搜索引擎网址" 
                        value="${engine?.url || ''}" 
                        data-index="${index}" data-field="url">
             </div>

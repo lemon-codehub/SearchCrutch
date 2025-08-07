@@ -321,23 +321,15 @@
         </div>
 
         <div class="content">
-            <!-- 内置搜索引擎 -->
-            <div class="section">
-                <h2 class="section-title">📚 内置搜索引擎</h2>
-                <div class="search-engine-grid" id="builtinEngines">
-                    <!-- 动态生成 -->
-                </div>
-            </div>
 
             <!-- 自定义搜索 -->
             <div class="section">
                 <h2 class="section-title">⚙️ 自定义搜索</h2>
                 <div class="help-text">
-                    <strong>如何配置自定义搜索：</strong><br>
-                    复制搜索网址，将网址中的关键词替换为 %s，输入网址框并填写名称后勾选。
-                    例如：<code>https://www.zhihu.com/search?type=content&q=便捷搜索</code> 
+                    复制搜索网址，将网址中的关键词替换为 %s，输入网址框并填写名称后勾选。<br>
+                    例如：<code>https://www.zhihu.com/search?type=content&q=便捷搜索</code> <br>
                     替换为：<code>https://www.zhihu.com/search?type=content&q=%s</code>
-                    <br><a href="https://ishare20.net/docs/quicksearch/#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%90%9C%E7%B4%A2" target="_blank">查看详细配置指南</a>
+                    <br><a href="https://lemontree.one/docs/quicksearch/#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%90%9C%E7%B4%A2" target="_blank">查看详细配置指南</a>
                 </div>
                 
                 <div class="custom-search-section">
@@ -358,31 +350,19 @@
                             新标签页打开搜索结果
                         </label>
                     </div>
-                    <div class="setting-item">
-                        <label>
-                            <input type="checkbox" id="clickToSwitch">
-                            单击图标切换搜索引擎
-                        </label>
-                    </div>
-                    <div class="setting-item">
+                    <!-- <div class="setting-item">
                         <label>
                             <input type="checkbox" id="googleDirectAccess" checked disabled>
                             支持Google引用页重试直接访问
                         </label>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
             <!-- 数据同步 -->
             <div class="section">
-                <h2 class="section-title">☁️ 数据同步</h2>
+                <h2 class="section-title">☁️ 数据操作</h2>
                 <div class="sync-section">
-                    <div class="setting-item">
-                        <label>
-                            <input type="checkbox" id="autoSync">
-                            备份数据自动同步
-                        </label>
-                    </div>
                     <div class="sync-buttons">
                         <button class="btn btn-success" id="backupData">📤 备份数据</button>
                         <button class="btn btn-secondary" id="restoreData">📥 恢复数据</button>
@@ -393,11 +373,10 @@
 
         <div class="footer">
             <div class="footer-links">
-                <a href="https://ishare20.net/docs/quicksearch/" target="_blank">📖 使用指南</a>
-                <a href="https://support.qq.com/product/485332" target="_blank">💬 建议反馈</a>
-                <a href="https://ishare20.net/about.html#4-Donate" target="_blank">❤️ 支持开发者</a>
+                <a href="https://lemontree.one/docs/quicksearch/" target="_blank">📖 使用指南</a>
+                <a href="https://x.com/nodotbtree" target="_blank">🧑‍💻关注开发者X</a>
             </div>
-            <p style="color: #6c757d; font-size: 12px;">版本 1.0.3 | Chrome v3 兼容</p>
+            <p style="color: #6c757d; font-size: 12px;">版本 1.0.3</p>
         </div>
     </div>
 

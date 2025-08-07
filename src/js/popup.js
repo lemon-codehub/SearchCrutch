@@ -63,6 +63,72 @@ class PopupManager {
         ];
     }
 
+    // 获取搜索引擎的favicon URL
+    getFaviconUrl(engine) {
+        try {
+            const url = new URL(engine.url);
+            return `${url.protocol}//${url.hostname}/favicon.ico`;
+        } catch (error) {
+            console.error('解析URL失败:', error);
+            return null;
+        }
+    }
+
+    // 获取备用图标（当favicon加载失败时使用）
+    getFallbackIcon(engine) {
+        const iconMap = {
+            'Google': '🔍',
+            '百度': '🔎',
+            '必应': '🔍',
+            '搜狗': '🔍',
+            '知乎': '💡',
+            '微博': '📱',
+            '微信': '💬',
+            '淘宝': '🛒',
+            '京东': '🛒',
+            '天猫': '🛍️',
+            '亚马逊': '📦',
+            'YouTube': '📺',
+            'B站': '',
+            'GitHub': '💻',
+            'Stack Overflow': '💻',
+            '维基百科': '📚',
+            '豆瓣': '📖'
+        };
+
+        // 根据名称匹配图标
+        for (const [name, icon] of Object.entries(iconMap)) {
+            if (engine.name.includes(name)) {
+                return icon;
+            }
+        }
+
+        // 根据URL域名匹配图标
+        try {
+            const url = new URL(engine.url);
+            const hostname = url.hostname.toLowerCase();
+            
+            if (hostname.includes('zhihu')) return '';
+            if (hostname.includes('weibo')) return '';
+            if (hostname.includes('wechat') || hostname.includes('wx')) return '';
+            if (hostname.includes('taobao')) return '';
+            if (hostname.includes('jd.com')) return '';
+            if (hostname.includes('tmall')) return '🛍️';
+            if (hostname.includes('amazon')) return '';
+            if (hostname.includes('youtube')) return '';
+            if (hostname.includes('bilibili')) return '';
+            if (hostname.includes('github')) return '';
+            if (hostname.includes('stackoverflow')) return '';
+            if (hostname.includes('wikipedia')) return '';
+            if (hostname.includes('douban')) return '📖';
+        } catch (error) {
+            console.error('解析URL失败:', error);
+        }
+
+        // 默认图标
+        return '🔍';
+    }
+
     renderSearchEngines() {
         const container = document.getElementById('searchEngines');
         const enabledEngines = this.searchEngines.filter(engine => engine.enabled);
@@ -86,9 +152,17 @@ class PopupManager {
 
         container.innerHTML = enabledEngines.map((engine, index) => {
             const isCurrent = index === this.currentIndex;
+            const faviconUrl = this.getFaviconUrl(engine);
+            const fallbackIcon = this.getFallbackIcon(engine);
+            
             return `
                 <a href="#" class="engine-item ${isCurrent ? 'current' : ''}" 
                    data-index="${index}">
+                    <div class="engine-icon">
+                        <img src="${faviconUrl}" alt="${engine.name}" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        <span class="fallback-icon" style="display: none;">${fallbackIcon}</span>
+                    </div>
                     <span class="engine-name">${engine.name}</span>
                     <span class="engine-status">${isCurrent ? '当前' : '点击切换'}</span>
                 </a>

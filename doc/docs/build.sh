@@ -1,1 +1,1 @@
-yarn vuepress build docs
+pnpm vuepress build docs

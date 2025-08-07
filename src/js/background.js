@@ -96,7 +96,7 @@ function createContextMenus() {
   chrome.contextMenus.removeAll(() => {
     chrome.contextMenus.create({
       id: 'search-selection',
-      title: '搜索选中文本',
+      title: '便捷搜索',
       contexts: ['selection']
     });
     

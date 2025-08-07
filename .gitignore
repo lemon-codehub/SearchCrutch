@@ -2,3 +2,6 @@
 /doc/node_modules/
 /doc/docs/.vuepress/.temp/
 /doc/docs/.vuepress/.cache/
+/doc/docs/.vitepress/.cache/
+/doc/docs/.vuepress/dist/
+/doc/pnpm-lock.yaml
