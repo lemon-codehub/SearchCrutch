@@ -1,11 +1,11 @@
 # 便捷搜索浏览器插件
-在搜索关键词不重输的情况下切换 Google，百度，必应等等搜索引擎，并支持添加自定义搜索引擎，支持右键搜索
+> 一键切换多引擎，关键词无需重输，极致高效的浏览器搜索体验。
 
-## 功能介绍
-1. 使用Google、百度、必应等搜索时，显示切换搜索图标
-2. 搜索引擎可切换Google/百度/必应/搜狗/自定义
-3. 保持搜索关键词，无需重输，支持右键使用不同的搜索引擎
-4. 支持自定义的搜索引擎切换
+## 功能亮点
+
+- 🚀 **多引擎切换**：支持 Google、百度、必应、搜狗等主流搜索引擎，点击即可切换，无需重复输入关键词
+- 🛠️ **自定义引擎**：可自定义添加任意搜索引擎，满足个性化需求
+- 🖱️ **右键搜索**：选中文本，右键菜单一键搜索
 
 ## 自定义搜索
 插件已经内置部分搜索引擎，自定义搜索引擎将搜索关键词替换为%s即可。以下表格汇总的一些常见的搜索URL
@@ -49,12 +49,6 @@ Youtube|https://www.youtube.com/results?search_query=%s
 
 ## 截图
 ![][2]
-![][3]
-
-## 视频演示
-
-<iframe src="//player.bilibili.com/player.html?aid=291584434&bvid=BV1mf4y1L7ne&cid=365096319&page=1&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="450px"> </iframe>
-
 
 ## 安装教程
 - Edge浏览器
@@ -69,5 +63,4 @@ Youtube|https://www.youtube.com/results?search_query=%s
 
   [1]: https://github.com/xhhjin/SearchCrutch
   [2]: https://lemontree.one/usr/uploads/2021/06/1758262184.png
-  [3]: https://s31.aconvert.com/convert/p3r68-cdx67/mbwpb-349r2.gif
   [4]: https://microsoftedge.microsoft.com/addons/detail/%E4%BE%BF%E6%8D%B7%E6%90%9C%E7%B4%A2/mpobbihlicncajephnnbcdjmgfinplpf
