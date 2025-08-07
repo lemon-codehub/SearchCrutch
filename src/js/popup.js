@@ -17,11 +17,41 @@ class PopupManager {
     }
 
     async loadData() {
-        const result = await chrome.storage.sync.get(['searchEngines']);
-        this.searchEngines = result.searchEngines || this.getDefaultSearchEngines();
-        
-        const localResult = await chrome.storage.local.get(['currentIndex']);
-        this.currentIndex = localResult.currentIndex || 0;
+        try {
+            const result = await chrome.storage.sync.get(['searchEngines']);
+            this.searchEngines = result.searchEngines || this.getDefaultSearchEngines();
+            
+            const localResult = await chrome.storage.local.get(['currentIndex']);
+            this.currentIndex = localResult.currentIndex || 0;
+            
+            console.log('加载数据:', {
+                searchEngines: this.searchEngines,
+                currentIndex: this.currentIndex,
+                enabledEngines: this.searchEngines.filter(e => e.enabled)
+            });
+        } catch (error) {
+            console.error('加载数据失败:', error);
+            throw error;
+        }
+    }
+
+    // 获取最新数据（每次操作时调用）
+    async getLatestData() {
+        try {
+            const result = await chrome.storage.sync.get(['searchEngines']);
+            const localResult = await chrome.storage.local.get(['currentIndex']);
+            
+            return {
+                searchEngines: result.searchEngines || this.getDefaultSearchEngines(),
+                currentIndex: localResult.currentIndex || 0
+            };
+        } catch (error) {
+            console.error('获取最新数据失败:', error);
+            return {
+                searchEngines: this.getDefaultSearchEngines(),
+                currentIndex: 0
+            };
+        }
     }
 
     getDefaultSearchEngines() {
@@ -37,9 +67,21 @@ class PopupManager {
         const container = document.getElementById('searchEngines');
         const enabledEngines = this.searchEngines.filter(engine => engine.enabled);
         
+        console.log('渲染搜索引擎:', {
+            total: this.searchEngines.length,
+            enabled: enabledEngines.length,
+            currentIndex: this.currentIndex
+        });
+        
         if (enabledEngines.length === 0) {
             container.innerHTML = '<div class="error">没有启用的搜索引擎，请在设置中启用</div>';
             return;
+        }
+
+        // 确保currentIndex在有效范围内
+        if (this.currentIndex >= enabledEngines.length) {
+            this.currentIndex = 0;
+            chrome.storage.local.set({ currentIndex: 0 });
         }
 
         container.innerHTML = enabledEngines.map((engine, index) => {
@@ -55,14 +97,30 @@ class PopupManager {
     }
 
     async switchEngine(index) {
-        const enabledEngines = this.searchEngines.filter(engine => engine.enabled);
-        if (index >= 0 && index < enabledEngines.length) {
-            this.currentIndex = index;
-            await chrome.storage.local.set({ currentIndex: index });
-            this.renderSearchEngines();
+        try {
+            // 获取最新数据
+            const latestData = await this.getLatestData();
+            const enabledEngines = latestData.searchEngines.filter(engine => engine.enabled);
             
-            // 获取当前页面的搜索关键词并执行搜索
-            await this.performSearch(index);
+            console.log('切换搜索引擎:', {
+                requestedIndex: index,
+                enabledEnginesCount: enabledEngines.length,
+                currentIndex: latestData.currentIndex
+            });
+            
+            if (index >= 0 && index < enabledEngines.length) {
+                this.currentIndex = index;
+                this.searchEngines = latestData.searchEngines;
+                await chrome.storage.local.set({ currentIndex: index });
+                this.renderSearchEngines();
+                
+                // 获取当前页面的搜索关键词并执行搜索
+                await this.performSearch(index);
+            } else {
+                console.error('无效的搜索引擎索引:', index);
+            }
+        } catch (error) {
+            console.error('切换搜索引擎失败:', error);
         }
     }
 
@@ -70,7 +128,12 @@ class PopupManager {
         try {
             // 获取当前活动标签页
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-            if (!tab) return;
+            if (!tab) {
+                console.log('无法获取当前标签页');
+                return;
+            }
+
+            console.log('当前标签页:', tab.url);
 
             // 从当前页面URL中提取搜索关键词
             const searchQuery = this.extractSearchQuery(tab.url);
@@ -79,11 +142,36 @@ class PopupManager {
                 return;
             }
 
+            console.log('提取的搜索关键词:', searchQuery);
+
+            // 获取最新数据
+            const latestData = await this.getLatestData();
+            const enabledEngines = latestData.searchEngines.filter(engine => engine.enabled);
+            const selectedEngine = enabledEngines[engineIndex];
+            
+            // 在完整搜索引擎数组中找到对应的索引
+            const fullIndex = latestData.searchEngines.findIndex(engine => 
+                engine.name === selectedEngine.name && engine.url === selectedEngine.url
+            );
+
+            console.log('搜索参数:', {
+                engineIndex: engineIndex,
+                fullIndex: fullIndex,
+                selectedEngine: selectedEngine,
+                query: searchQuery
+            });
+
             // 发送搜索请求到background script
             chrome.runtime.sendMessage({
                 action: 'search',
-                index: engineIndex,
+                index: fullIndex,
                 query: searchQuery
+            }, (response) => {
+                if (chrome.runtime.lastError) {
+                    console.error('发送消息失败:', chrome.runtime.lastError);
+                } else {
+                    console.log('搜索响应:', response);
+                }
             });
         } catch (error) {
             console.error('执行搜索失败:', error);
@@ -94,6 +182,8 @@ class PopupManager {
         try {
             const urlObj = new URL(url);
             const hostname = urlObj.hostname.toLowerCase();
+            
+            console.log('解析URL:', { hostname, url });
             
             // 根据不同搜索引擎提取搜索关键词
             if (hostname.includes('google')) {
@@ -128,18 +218,34 @@ class PopupManager {
 
     bindEvents() {
         // 为搜索引擎项绑定点击事件
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('.engine-item')) {
+        document.addEventListener('click', async (e) => {
+            const engineItem = e.target.closest('.engine-item');
+            if (engineItem) {
                 e.preventDefault();
-                const index = parseInt(e.target.closest('.engine-item').dataset.index);
-                this.switchEngine(index);
+                const index = parseInt(engineItem.dataset.index);
+                console.log('点击搜索引擎:', index);
+                await this.switchEngine(index);
             }
         });
 
         // 监听来自background的消息
         chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+            console.log('收到消息:', request);
             if (request.action === 'updateCurrentIndex') {
                 this.currentIndex = request.currentIndex;
+                this.renderSearchEngines();
+            }
+        });
+
+        // 监听存储变化
+        chrome.storage.onChanged.addListener(async (changes, namespace) => {
+            console.log('存储变化:', { changes, namespace });
+            if (namespace === 'sync' && changes.searchEngines) {
+                this.searchEngines = changes.searchEngines.newValue;
+                this.renderSearchEngines();
+            }
+            if (namespace === 'local' && changes.currentIndex) {
+                this.currentIndex = changes.currentIndex.newValue;
                 this.renderSearchEngines();
             }
         });
