@@ -1,266 +1,385 @@
-﻿<html>
-
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-    <title>便捷搜索-选项</title>
-    <style type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>便捷搜索 - 设置</title>
+    <style>
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: tahoma, Arial;
-            font-size: 13px;
-            background: #ccc;
-        }
-
-        #wrap {
-            margin: 0 auto;
-            width: 790px;
-            border: 2px solid #999;
-            -webkit-border-radius: 12px;
-            background: #fff;
-        }
-
-        #content {
-            width: 670px;
-            margin: 0 10px 0 60px;
-        }
-
-        #heading {
-            padding: 16px 0 15px;
-            border-bottom: 1px dashed #999;
-        }
-
-        #heading img {
-            float: left;
-            margin: -8px 15px 0 0;
-        }
-
-        #heading h1 {
-            font-size: 25px;
-        }
-
-        #options {
-            padding: 10px 0 10px;
-            border-bottom: 1px dashed #999;
-            line-height: 24px;
-
-            display: table;
-        }
-
-        #options p {
-            margin-top: 5px;
-            line-height: 30px;
-            font-weight: bold;
-        }
-
-        #options input {
-            float: left;
-            margin: 7px 6px 0 0;
-        }
-
-        #div_exp {
-            font-size: 12px;
-            line-height: 20px;
-        }
-
-        .heighup {
-            color: #080;
-        }
-
-        #div_recommend {
-            margin: -20px 0 10px 0;
-            padding: 20px 0;
-            width: 790px;
-            border: 1px solid #999;
-            -webkit-border-radius: 6px;
-            background: #fff;
-        }
-
-        #div_reclose {
-            margin: 15px auto;
-            width: 770px;
-            text-align: right;
-        }
-
-        #div_ad {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        a.adinfo {
-            color: #449;
-            margin: 0 0 0 50px;
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .search-engine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .engine-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .engine-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .engine-card.enabled {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+
+        .engine-card input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .engine-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .custom-search-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .custom-search-form {
+            display: grid;
+            grid-template-columns: 1fr 2fr auto;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #495057;
+        }
+
+        .form-group input {
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
-        ;
-
-        a.adinfo:hover {
-            color: #22f;
+        .btn-primary {
+            background: #667eea;
+            color: white;
         }
 
-        .clear {
-            clear: both
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
         }
 
-        .custom_name {
-            width: 120px;
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
         }
 
-        .custom_search {
-            width: 340px;
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .setting-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .setting-item:hover {
+            border-color: #667eea;
+        }
+
+        .setting-item label {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+
+        .setting-item input[type="checkbox"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .sync-section {
+            background: #e3f2fd;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .sync-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 25px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #5a6fd8;
+        }
+
+        .help-text {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #856404;
+        }
+
+        .help-text a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .custom-search-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .sync-buttons {
+                flex-direction: column;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
-    <link rel="stylesheet" type="text/css" href="jiathis_share.css">
-    <script type="text/javascript" src="js/base.js"></script>
-    <script type="text/javascript" src="js/options.js"></script>
 </head>
-
 <body>
-<div id="wrap">
-    <div id="content">
-        <div id="heading"><img src='img/icon-48.png'/>
-            <h1>"便捷搜索" 已安装 - 选项</h1>
-        </div>
-        <div id="options">
-            <div style="float:left;width:260px;">
-                搜索引擎快捷切换，关键词无需重输，支持添加右键搜索<br>
-                <p>显示我想切换的搜索：</p>
-                <input type="checkbox" id="cb_0"/><label for="cb_0">Google</label><br class="clear">
-                <input type="checkbox" id="cb_1"/><label for="cb_1">百度</label><br class="clear">
-                <input type="checkbox" id="cb_2"/><label for="cb_2">必应</label><br class="clear">
-                <input type="checkbox" id="cb_3"/><label for="cb_3">搜狗</label><br class="clear">
-                <br/>
-            </div>
-            <div style="float:right;margin-top:4px;margin-left: 10px;"><img src='../SearchCrutch.png'
-                                                                            style="width: 380px"/>
-            </div>
-
-        </div>
-        <div id="options">
-            <div>
-                复制搜索网址，将网址中的关键词替换为%s，输入网址框并填写名称后勾选。勾选后右键菜单刷新网页生效。如https://www.zhihu.com/search?type=content&q=便捷搜索，替换关键词后为https://www.zhihu.com/search?type=content&q=%s
-                <br><a
-                    href="https://ishare20.net/docs/quicksearch/#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%90%9C%E7%B4%A2"
-                    target="_blank" title="如何配置？">自定义搜索汇总</a>
-            </div>
-            <div style="width:670px; margin-top:15px;">
-                <h2>自定义搜索</h2>
-                <table style="width:420; cellpadding:0; cellspacing:0;">
-                    <tr>
-                        <td></td>
-                        <td>名称</td>
-                        <td>网址</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_4"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_0"
-                                   placeholder="名称,如:Google"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_0"
-                                   placeholder="网址,如:https://www.google.com/search?q=%s"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_5"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_1"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_1"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_6"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_2"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_2"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_7"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_3"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_3"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_8"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_4"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_4"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_9"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_5"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_5"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_10"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_6"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_6"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_11"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_7"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_7"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_12"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_8"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_8"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_13"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_9"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_9"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_14"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_10"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_10"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_15"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_11"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_11"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_16"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_12"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_12"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_17"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_13"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_13"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" id="cb_18"/></td>
-                        <td><input class="custom_name" type="text" id="custom_name_14"/></td>
-                        <td><input class="custom_search" type="text" id="custom_search_14"/></td>
-                    </tr>
-                </table>
-            </div>
-            <div style="margin-top:10px;font-size:13px;font-weight:bold;">辅助小功能：</div>
-            <input type="checkbox" id="cb_switch_open_new_tab"/><label
-                for="cb_switch_open_new_tab">是否新标签页打开</label><br class="clear">
-            <input type="checkbox" id="cb_switch"/><label for="cb_switch">单击图标切换</label><br class="clear">
-            <input type="checkbox" id="cb_dref" checked="checked" disabled="true"/><label
-                for="cb_dref">支持Google引用页重试直接访问</label>&nbsp;&nbsp;
-            <div style="margin-top:5px;font-size:13px;font-weight:bold;">数据云同步：</div>
-            <input type="checkbox" id="cb_autosync"/><label for="cb_autosync">备份数据自动同步</label><br
-                class="clear">
-            <input type="button" id="cb_upload" value="备份数据"/>
-            <input type="button" id="cb_download" value="恢复数据"/><br class="clear">
-
+    <div class="container">
+        <div class="header">
+            <h1>🔍 便捷搜索</h1>
+            <p>在多个搜索引擎间快速切换，关键词无需重输</p>
         </div>
 
+        <div class="content">
+            <!-- 内置搜索引擎 -->
+            <div class="section">
+                <h2 class="section-title">📚 内置搜索引擎</h2>
+                <div class="search-engine-grid" id="builtinEngines">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
 
-        <!-- JiaThis Button BEGIN -->
-        <div class="jiathis_style_32x32" style="margin-top:15px;">
+            <!-- 自定义搜索 -->
+            <div class="section">
+                <h2 class="section-title">⚙️ 自定义搜索</h2>
+                <div class="help-text">
+                    <strong>如何配置自定义搜索：</strong><br>
+                    复制搜索网址，将网址中的关键词替换为 %s，输入网址框并填写名称后勾选。
+                    例如：<code>https://www.zhihu.com/search?type=content&q=便捷搜索</code> 
+                    替换为：<code>https://www.zhihu.com/search?type=content&q=%s</code>
+                    <br><a href="https://ishare20.net/docs/quicksearch/#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%90%9C%E7%B4%A2" target="_blank">查看详细配置指南</a>
+                </div>
+                
+                <div class="custom-search-section">
+                    <div id="customSearchForms">
+                        <!-- 动态生成 -->
+                    </div>
+                    <button class="btn btn-primary" id="addCustomSearch">➕ 添加自定义搜索</button>
+                </div>
+            </div>
 
-            <a href="https://ishare20.net/docs/quicksearch/"  target="_blank">使用指南</a>
+            <!-- 功能设置 -->
+            <div class="section">
+                <h2 class="section-title">🔧 功能设置</h2>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="openInNewTab">
+                            新标签页打开搜索结果
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="clickToSwitch">
+                            单击图标切换搜索引擎
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="googleDirectAccess" checked disabled>
+                            支持Google引用页重试直接访问
+                        </label>
+                    </div>
+                </div>
+            </div>
 
-            <a href="https://support.qq.com/product/485332" style="margin-left: 14px" target="_blank">建议反馈</a>
-
-            <a href="https://ishare20.net/about.html#4-Donate" style="margin-left: 12px" target="_blank">支持开发者</a>
-            <br> <br>
+            <!-- 数据同步 -->
+            <div class="section">
+                <h2 class="section-title">☁️ 数据同步</h2>
+                <div class="sync-section">
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="autoSync">
+                            备份数据自动同步
+                        </label>
+                    </div>
+                    <div class="sync-buttons">
+                        <button class="btn btn-success" id="backupData">📤 备份数据</button>
+                        <button class="btn btn-secondary" id="restoreData">📥 恢复数据</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <div class="footer">
+            <div class="footer-links">
+                <a href="https://ishare20.net/docs/quicksearch/" target="_blank">📖 使用指南</a>
+                <a href="https://support.qq.com/product/485332" target="_blank">💬 建议反馈</a>
+                <a href="https://ishare20.net/about.html#4-Donate" target="_blank">❤️ 支持开发者</a>
+            </div>
+            <p style="color: #6c757d; font-size: 12px;">版本 1.0.3 | Chrome v3 兼容</p>
+        </div>
     </div>
-</div>
-</body>
-<script type="text/javascript" src="js/saveoptions.js"></script>
 
+    <script src="js/options.js"></script>
+</body>
 </html>

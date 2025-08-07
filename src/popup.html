@@ -1,69 +1,135 @@
-﻿<!doctype html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-    <style type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>便捷搜索</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: tahoma, Arial;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 14px;
-            width: 65px;
-            padding: 8px 12px;
-            line-height: 22px;
+            width: 320px;
+            background: white;
+            color: #333;
         }
 
-        a {
-            color: rgb(51, 102, 204);
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .search-engines {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .engine-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-decoration: none;
-            display: block;
+            color: #333;
         }
 
-        a:hover {
+        .engine-item:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateY(-1px);
+        }
+
+        .engine-item.current {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+
+        .engine-name {
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .engine-status {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .footer {
+            border-top: 1px solid #e9ecef;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .footer a:hover {
             text-decoration: underline;
         }
 
-        .disable {
-            color: #aaa;
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
         }
 
-        .notshow {
-            display: none;
-        }
-
-        hr {
-            width: 35px;
-            margin-left: 0;
-            color: #000;
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+            text-align: center;
         }
     </style>
-    <script type="text/javascript" src="js/base.js"></script>
-    <script type="text/javascript" src="js/setlink.js"></script>
 </head>
 <body>
-<div style="line-height:28px;margin-bottom:8px;">
-    <a id="a_0" href="javascript:redirect(0);">Google</a>
-</div>
-<a id="a_1" href="javascript:redirect(1);">百度</a>
-<a id="a_2" href="javascript:redirect(2);">必应</a>
-<a id="a_3" href="javascript:redirect(3);">搜狗</a>
-<a id="a_4" href="javascript:redirect(4);">自定1</a>
-<a id="a_5" href="javascript:redirect(5);">自定2</a>
-<a id="a_6" href="javascript:redirect(6);">自定3</a>
-<a id="a_7" href="javascript:redirect(7);">自定4</a>
-<a id="a_8" href="javascript:redirect(8);">自定5</a>
-<a id="a_9" href="javascript:redirect(9);">自定6</a>
-<a id="a_10" href="javascript:redirect(10);">自定7</a>
-<a id="a_11" href="javascript:redirect(11);">自定8</a>
-<a id="a_12" href="javascript:redirect(12);">自定9</a>
-<a id="a_13" href="javascript:redirect(13);">自定10</a>
-<a id="a_14" href="javascript:redirect(14);">自定11</a>
-<a id="a_15" href="javascript:redirect(15);">自定12</a>
-<a id="a_16" href="javascript:redirect(16);">自定13</a>
-<a id="a_17" href="javascript:redirect(17);">自定14</a>
-<a id="a_18" href="javascript:redirect(18);">自定15</a>
-<hr>
-<a href="./options.html" style="font-size:12px;" target="_blank">设置</a>
-<div style="display:none;">
-    <input id="in_q"/>
-</div>
+    <div class="header">
+        <h1>🔍 便捷搜索</h1>
+        <p>点击切换搜索引擎</p>
+    </div>
+
+    <div class="content">
+        <div id="searchEngines" class="search-engines">
+            <div class="loading">加载中...</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="options.html" target="_blank">⚙️ 设置</a>
+    </div>
+
+    <script src="js/popup.js"></script>
 </body>
-<script type="text/javascript" src="js/redirect.js"></script>
 </html>
