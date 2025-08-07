@@ -55,7 +55,8 @@ class OptionsManager {
                 <label>
                     <input type="checkbox" ${engine.enabled ? 'checked' : ''} 
                            data-index="${index}">
-                    <span class="engine-name">${engine.name}</span>
+                    <div class="engine-name">${engine.name}</div>
+                    <div class="engine-url">${engine.url}</div>
                 </label>
             `;
             
@@ -97,7 +98,7 @@ class OptionsManager {
         form.id = `custom-form-${index}`;
         
         form.innerHTML = `
-            <div class="form-group">
+            <div class="checkbox-group">
                 <input type="checkbox" ${engine?.enabled ? 'checked' : ''} 
                        data-index="${index}">
             </div>
