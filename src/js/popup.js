@@ -67,7 +67,13 @@ class PopupManager {
     getFaviconUrl(engine) {
         try {
             const url = new URL(engine.url);
-            return `${url.protocol}//${url.hostname}/favicon.ico`;
+            if(engine.url.includes('search.bilibili.com')){
+                return 'https://www.bilibili.com/favicon.ico';
+            }else if(engine.url.includes('s.taobao.com')){
+                return 'https://www.taobao.com/favicon.ico';
+            }else{
+                return `${url.protocol}//${url.hostname}/favicon.ico`;
+            }
         } catch (error) {
             console.error('解析URL失败:', error);
             return null;
@@ -256,9 +262,17 @@ class PopupManager {
         try {
             const urlObj = new URL(url);
             const hostname = urlObj.hostname.toLowerCase();
-            
             console.log('解析URL:', { hostname, url });
-            
+
+            // 针对抖音等路径型搜索引擎
+            if (hostname.includes('douyin.com')) {
+                // /search/关键词
+                const match = urlObj.pathname.match(/\/search\/([^/?#]+)/);
+                if (match && match[1]) {
+                    return decodeURIComponent(match[1]);
+                }
+            }
+
             // 根据不同搜索引擎提取搜索关键词
             if (hostname.includes('google')) {
                 return urlObj.searchParams.get('q');
@@ -282,7 +296,6 @@ class PopupManager {
                     if (value) return value;
                 }
             }
-            
             return null;
         } catch (error) {
             console.error('解析URL失败:', error);

@@ -3,9 +3,9 @@
 
 ## 功能亮点
 
-- 🚀 **多引擎切换**：支持 Google、百度、必应、搜狗等主流搜索引擎，点击即可切换，无需重复输入关键词
+- 🚀 **多引擎切换**：支持 Google、百度、必应等主流搜索引擎，点击即可切换，无需重复输入关键词
 - 🛠️ **自定义引擎**：可自定义添加任意搜索引擎，满足个性化需求
-- 🖱️ **右键搜索**：选中文本，右键菜单一键搜索
+- 🖱️ **右键搜索**：选中文本，右键菜单选择搜索引擎搜索
 
 
 ## 安装教程
@@ -47,7 +47,44 @@ Youtube|https://www.youtube.com/results?search_query=%s
 
 下载 [json 文件](https://lemontree.one/docs/quicksearch/search_list.json)在设置点击恢复数据选文件可导入以上搜索引擎
 
+
+
+## 截图
+![][2]
+
+## 视频演示
+
+<iframe width="100%" height="480px" src="https://www.youtube.com/embed/pE7IEA4xJAk?si=6jT0s_b6H2v8Wlqi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## 数据安全
+
+1. 信息收集
+本插件不会主动收集、存储或上传任何个人身份信息。插件的所有设置、搜索引擎自定义数据等仅保存在您的本地浏览器或通过 Chrome 同步机制在您的设备间同步，不会上传到任何第三方服务器。
+
+2. 数据使用
+插件仅在本地存储您的自定义设置和搜索引擎列表，用于实现插件功能。
+插件不会分析、存储或上传您的搜索内容、浏览历史或任何网页数据。
+插件不会向第三方提供、出售或共享您的任何信息。
+
+3. 权限说明
+插件请求的权限仅用于实现如下功能：
+读取和修改浏览器标签页（用于切换搜索引擎）。
+存储插件设置（用于保存您的自定义配置）。
+右键菜单功能（用于快速搜索选中文本）。
+插件不会滥用任何权限。
+
+4. 第三方服务
+本插件不集成任何第三方统计、广告或追踪服务。
+
 ## 更新日志
+## v1.0.4
+**2025.8.10**
+
+- 右键搜索使用新标签页打
+- 切换搜索引擎默认当前标签页
+- 内置搜狗搜索改为小红书
+- 备份恢复改为导出导入
+
 ### v1.0.3
 **2025.8.7**
 - 适配 Chrome Manifest V3
@@ -67,14 +104,6 @@ Youtube|https://www.youtube.com/results?search_query=%s
 2、修复右键搜索已知问题
 
 3、更新使用文档、建议反馈入口
-
-## 截图
-![][2]
-
-## 视频演示
-
-<iframe width="100%" height="480px" src="https://www.youtube.com/embed/pE7IEA4xJAk?si=6jT0s_b6H2v8Wlqi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
 
 
 

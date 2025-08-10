@@ -10,3 +10,5 @@ doc/docs/.vitepress/dist/404.html
 doc/docs/.vitepress/dist/hashmap.json
 doc/docs/.vitepress/dist/index.html
 doc/docs/.vitepress/dist/privacy.html
+.DS_Store
+.idea/
