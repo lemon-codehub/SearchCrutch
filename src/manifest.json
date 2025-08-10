@@ -1,8 +1,8 @@
 {
-  "name": "便捷搜索",
+  "name": "__MSG_name__",
   "version": "1.0.4",
   "manifest_version": 3,
-  "description": "在Google，百度，必应等等搜索引擎间进行快捷切换，搜索关键词无需重输，支持右键搜索",
+  "description": "__MSG_pluginDesc__",
   "homepage_url": "https://lemontree.one/docs/quicksearch/",
   "action": {
     "default_icon": {

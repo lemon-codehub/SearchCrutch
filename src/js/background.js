@@ -105,7 +105,7 @@ function createContextMenus() {
       if (engine.enabled) {
         chrome.contextMenus.create({
           id: `search-${index}`,
-          title: `用${engine.name}搜索`,
+          title: engine.name,
           contexts: ['selection'],
           parentId: 'search-selection'
         });

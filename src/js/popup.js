@@ -135,32 +135,35 @@ class PopupManager {
         return '🔍';
     }
 
-    renderSearchEngines() {
+    async renderSearchEngines() {
         const container = document.getElementById('searchEngines');
         const enabledEngines = this.searchEngines.filter(engine => engine.enabled);
-        
-        console.log('渲染搜索引擎:', {
-            total: this.searchEngines.length,
-            enabled: enabledEngines.length,
-            currentIndex: this.currentIndex
-        });
-        
-        if (enabledEngines.length === 0) {
-            container.innerHTML = '<div class="error">没有启用的搜索引擎，请在设置中启用</div>';
-            return;
+        let currentUrl = '';
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            currentUrl = tab?.url || '';
+        } catch (e) {
+            currentUrl = '';
         }
-
-        // 确保currentIndex在有效范围内
-        if (this.currentIndex >= enabledEngines.length) {
-            this.currentIndex = 0;
-            chrome.storage.local.set({ currentIndex: 0 });
-        }
-
+        // 判断当前url属于哪个引擎
+        const getCurrentIndexByUrl = (url) => {
+            if (!url) return this.currentIndex;
+            for (let i = 0; i < enabledEngines.length; i++) {
+                const engine = enabledEngines[i];
+                try {
+                    const engineUrl = new URL(engine.url.replace('%s', ''));
+                    if (url.includes(engineUrl.hostname)) {
+                        return i;
+                    }
+                } catch {}
+            }
+            return this.currentIndex;
+        };
+        const realCurrentIndex = getCurrentIndexByUrl(currentUrl);
         container.innerHTML = enabledEngines.map((engine, index) => {
-            const isCurrent = index === this.currentIndex;
+            const isCurrent = index === realCurrentIndex;
             const faviconUrl = this.getFaviconUrl(engine);
             const fallbackIcon = this.getFallbackIcon(engine);
-            
             return `
                 <a href="#" class="engine-item ${isCurrent ? 'current' : ''}" 
                    data-index="${index}">
