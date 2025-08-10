@@ -273,6 +273,13 @@ class PopupManager {
                 }
             }
 
+            // 针对 YouTube 搜索
+            if (hostname.includes('youtube.com')) {
+                // ?search_query=xxx
+                const q = urlObj.searchParams.get('search_query');
+                if (q) return q;
+            }
+
             // 根据不同搜索引擎提取搜索关键词
             if (hostname.includes('google')) {
                 return urlObj.searchParams.get('q');
