@@ -66,14 +66,14 @@ function getDefaultSearchEngines() {
     { name: 'Google', url: 'https://www.google.com/search?q=%s', enabled: true },
     { name: '百度', url: 'https://www.baidu.com/s?wd=%s', enabled: true },
     { name: '必应', url: 'https://cn.bing.com/search?q=%s', enabled: true },
-    { name: '搜狗', url: 'https://www.sogou.com/web?query=%s', enabled: true }
+    { name: '小红书', url: 'https://www.xiaohongshu.com/search_result?keyword=%s&type=51', enabled: true }
   ];
 }
 
 // 获取默认设置
 function getDefaultSettings() {
   return {
-    openInNewTab: true,
+    openInNewTab: false,
     clickToSwitch: false,
     autoSync: false
   };
@@ -124,11 +124,12 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       const engine = state.searchEngines[index];
       const searchUrl = engine.url.replace('%s', encodeURIComponent(info.selectionText));
       
-      if (state.settings.openInNewTab) {
-        chrome.tabs.create({ url: searchUrl });
-      } else {
-        chrome.tabs.update(tab.id, { url: searchUrl });
-      }
+      chrome.tabs.create({ url: searchUrl });
+      // if (state.settings.openInNewTab) {
+      //   chrome.tabs.create({ url: searchUrl });
+      // } else {
+      //   chrome.tabs.update(tab.id, { url: searchUrl });
+      // }
     }
   }
 });

@@ -59,7 +59,7 @@ class PopupManager {
             { name: 'Google', url: 'https://www.google.com/search?q=%s', enabled: true },
             { name: '百度', url: 'https://www.baidu.com/s?wd=%s', enabled: true },
             { name: '必应', url: 'https://cn.bing.com/search?q=%s', enabled: true },
-            { name: '搜狗', url: 'https://www.sogou.com/web?query=%s', enabled: true }
+            { name: '小红书', url: 'https://www.xiaohongshu.com/search_result?keyword=%s&type=51', enabled: true }
         ];
     }
 

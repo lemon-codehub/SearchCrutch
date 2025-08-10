@@ -18,7 +18,7 @@ var searchselect_array =
         ["Google", "https://www.google.com/search?q=", "q", "https://www.google.com"],
         ["百度", "https://www.baidu.com/s?wd=", "wd", "https://www.baidu.com"],
         ["必应", "https://cn.bing.com/search?q=", "q", "https://cn.bing.com"],
-        ["搜狗", "https://www.sogou.com/web?query=", "query", "https://www.sogou.com"],
+        ["小红书", "https://www.xiaohongshu.com/search_result?keyword=&type=51", "keyword", "https://www.xiaohongshu.com"],
 
     ];
 var searchhost_array =
@@ -26,7 +26,7 @@ var searchhost_array =
         ["www.google.com", 0],
         ["www.baidu.com", 1],
         ["cn.bing.com", 2],
-        ["www.sogou.com", 3]
+        ["www.xiaohongshu.com", 3]
 
     ];
 

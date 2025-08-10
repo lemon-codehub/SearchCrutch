@@ -29,13 +29,13 @@ class OptionsManager {
             { name: 'Google', url: 'https://www.google.com/search?q=%s', enabled: true, builtin: true },
             { name: '百度', url: 'https://www.baidu.com/s?wd=%s', enabled: true, builtin: true },
             { name: '必应', url: 'https://cn.bing.com/search?q=%s', enabled: true, builtin: true },
-            { name: '搜狗', url: 'https://www.sogou.com/web?query=%s', enabled: true, builtin: true }
+            { name: '小红书', url: 'https://www.xiaohongshu.com/search_result?keyword=%s&type=51', enabled: true, builtin: true }
         ];
     }
 
     getDefaultSettings() {
         return {
-            openInNewTab: true,
+            openInNewTab: false,
             clickToSwitch: false,
             googleDirectAccess: true,
             autoSync: false
@@ -186,6 +186,8 @@ class OptionsManager {
         const googleDirectAccess = document.getElementById('googleDirectAccess');
         const autoSync = document.getElementById('autoSync');
         
+        console.log('加载设置:', this.settings);
+
         if (openInNewTab) openInNewTab.checked = this.settings.openInNewTab;
         if (clickToSwitch) clickToSwitch.checked = this.settings.clickToSwitch;
         if (googleDirectAccess) googleDirectAccess.checked = this.settings.googleDirectAccess;

@@ -4,4 +4,9 @@
 /doc/docs/.vuepress/.cache/
 /doc/docs/.vitepress/.cache/
 /doc/docs/.vuepress/dist/
+/doc/docs/.vitepress/dist/
 /doc/pnpm-lock.yaml
+doc/docs/.vitepress/dist/404.html
+doc/docs/.vitepress/dist/hashmap.json
+doc/docs/.vitepress/dist/index.html
+doc/docs/.vitepress/dist/privacy.html
