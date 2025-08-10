@@ -7,6 +7,9 @@
 - 🛠️ **自定义引擎**：可自定义添加任意搜索引擎，满足个性化需求
 - 🖱️ **右键搜索**：选中文本，右键菜单选择搜索引擎搜索
 
+## 截图
+![][2]
+
 
 ## 安装教程
 
@@ -70,20 +73,6 @@ Youtube|https://www.youtube.com/results?search_query=%s
 2、修复右键搜索已知问题
 
 3、更新使用文档、建议反馈入口
-
-## 截图
-![][2]
-
-## 安装教程
-- Edge浏览器
-
-[安装链接][4]
-
-- Chrome浏览器
-
-  下载插件压缩包，在Chrome扩展开启开发者模式后，点击加载已解压的扩展程序选择项目的文件夹即可安装成功
-
-[点击下载插件](https://github.com/lemon-codehub/SearchCrutch/releases)
 
   [1]: https://github.com/xhhjin/SearchCrutch
   [2]: https://lemontree.one/docs/quicksearch/assets/cover.51IW7ySK.jpg
