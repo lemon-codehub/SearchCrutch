@@ -17,50 +17,13 @@ class PopupManager {
     }
 
     async loadData() {
-        try {
-            const result = await chrome.storage.sync.get(['searchEngines']);
-            this.searchEngines = result.searchEngines || this.getDefaultSearchEngines();
-            
-            const localResult = await chrome.storage.local.get(['currentIndex']);
-            this.currentIndex = localResult.currentIndex || 0;
-            
-            console.log('加载数据:', {
-                searchEngines: this.searchEngines,
-                currentIndex: this.currentIndex,
-                enabledEngines: this.searchEngines.filter(e => e.enabled)
-            });
-        } catch (error) {
-            console.error('加载数据失败:', error);
-            throw error;
-        }
+        const state = await SearchConfig.read();
+        this.searchEngines = state.searchEngines;
+        this.currentIndex = state.currentIndex;
     }
 
-    // 获取最新数据（每次操作时调用）
     async getLatestData() {
-        try {
-            const result = await chrome.storage.sync.get(['searchEngines']);
-            const localResult = await chrome.storage.local.get(['currentIndex']);
-            
-            return {
-                searchEngines: result.searchEngines || this.getDefaultSearchEngines(),
-                currentIndex: localResult.currentIndex || 0
-            };
-        } catch (error) {
-            console.error('获取最新数据失败:', error);
-            return {
-                searchEngines: this.getDefaultSearchEngines(),
-                currentIndex: 0
-            };
-        }
-    }
-
-    getDefaultSearchEngines() {
-        return [
-            { name: 'Google', url: 'https://www.google.com/search?q=%s', enabled: true },
-            { name: '百度', url: 'https://www.baidu.com/s?wd=%s', enabled: true },
-            { name: '必应', url: 'https://cn.bing.com/search?q=%s', enabled: true },
-            { name: '小红书', url: 'https://www.xiaohongshu.com/search_result?keyword=%s&type=51', enabled: true }
-        ];
+        return SearchConfig.read();
     }
 
     // 获取搜索引擎的favicon URL
@@ -137,7 +100,7 @@ class PopupManager {
 
     async renderSearchEngines() {
         const container = document.getElementById('searchEngines');
-        const enabledEngines = this.searchEngines.filter(engine => engine.enabled);
+        const enabledEngines = this.searchEngines.filter(engine => engine.enabled && engine.name && engine.url);
         let currentUrl = '';
         try {
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -160,30 +123,51 @@ class PopupManager {
             return this.currentIndex;
         };
         const realCurrentIndex = getCurrentIndexByUrl(currentUrl);
-        container.innerHTML = enabledEngines.map((engine, index) => {
+        container.replaceChildren();
+        if (!enabledEngines.length) {
+            const empty = document.createElement('div');
+            empty.className = 'loading';
+            empty.textContent = '暂无启用的搜索引擎，请前往设置添加。';
+            container.appendChild(empty);
+            return;
+        }
+        enabledEngines.forEach((engine, index) => {
+            const item = document.createElement('a');
             const isCurrent = index === realCurrentIndex;
+            item.href = '#';
+            item.className = `engine-item ${isCurrent ? 'current' : ''}`;
+            item.dataset.index = index;
+            const icon = document.createElement('div');
+            icon.className = 'engine-icon';
+            const fallback = document.createElement('span');
+            fallback.className = 'fallback-icon';
+            fallback.textContent = this.getFallbackIcon(engine);
             const faviconUrl = this.getFaviconUrl(engine);
-            const fallbackIcon = this.getFallbackIcon(engine);
-            return `
-                <a href="#" class="engine-item ${isCurrent ? 'current' : ''}" 
-                   data-index="${index}">
-                    <div class="engine-icon">
-                        <img src="${faviconUrl}" alt="${engine.name}" 
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                        <span class="fallback-icon" style="display: none;">${fallbackIcon}</span>
-                    </div>
-                    <span class="engine-name">${engine.name}</span>
-                    <span class="engine-status">${isCurrent ? '当前' : '点击切换'}</span>
-                </a>
-            `;
-        }).join('');
+            if (faviconUrl) {
+                const img = document.createElement('img');
+                img.alt = '';
+                img.addEventListener('error', () => { img.hidden = true; fallback.hidden = false; });
+                fallback.hidden = true;
+                img.src = faviconUrl;
+                icon.appendChild(img);
+            }
+            icon.appendChild(fallback);
+            const name = document.createElement('span');
+            name.className = 'engine-name';
+            name.textContent = engine.name;
+            const status = document.createElement('span');
+            status.className = 'engine-status';
+            status.textContent = isCurrent ? '当前' : '点击切换';
+            item.append(icon, name, status);
+            container.appendChild(item);
+        });
     }
 
     async switchEngine(index) {
         try {
             // 获取最新数据
             const latestData = await this.getLatestData();
-            const enabledEngines = latestData.searchEngines.filter(engine => engine.enabled);
+            const enabledEngines = latestData.searchEngines.filter(engine => engine.enabled && engine.name && engine.url);
             
             console.log('切换搜索引擎:', {
                 requestedIndex: index,
@@ -229,7 +213,7 @@ class PopupManager {
 
             // 获取最新数据
             const latestData = await this.getLatestData();
-            const enabledEngines = latestData.searchEngines.filter(engine => engine.enabled);
+            const enabledEngines = latestData.searchEngines.filter(engine => engine.enabled && engine.name && engine.url);
             const selectedEngine = enabledEngines[engineIndex];
             
             // 在完整搜索引擎数组中找到对应的索引
@@ -338,7 +322,7 @@ class PopupManager {
         chrome.storage.onChanged.addListener(async (changes, namespace) => {
             console.log('存储变化:', { changes, namespace });
             if (namespace === 'sync' && changes.searchEngines) {
-                this.searchEngines = changes.searchEngines.newValue;
+                await this.loadData();
                 this.renderSearchEngines();
             }
             if (namespace === 'local' && changes.currentIndex) {
@@ -350,7 +334,10 @@ class PopupManager {
 
     showError(message) {
         const container = document.getElementById('searchEngines');
-        container.innerHTML = `<div class="error">${message}</div>`;
+        const error = document.createElement('div');
+        error.className = 'error';
+        error.textContent = message;
+        container.replaceChildren(error);
     }
 }
 

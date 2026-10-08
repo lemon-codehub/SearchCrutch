@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "engines": [
+    { "id": "google", "name": "Google", "category": "通用搜索", "url": "https://www.google.com/search?q=%s" },
+    { "id": "baidu", "name": "百度", "category": "通用搜索", "url": "https://www.baidu.com/s?wd=%s" },
+    { "id": "bing", "name": "必应", "category": "通用搜索", "url": "https://cn.bing.com/search?q=%s" },
+    { "id": "xiaohongshu", "name": "小红书", "category": "社区内容", "url": "https://www.xiaohongshu.com/search_result?keyword=%s&type=51" },
+    { "id": "zhihu", "name": "知乎", "category": "社区内容", "url": "https://www.zhihu.com/search?type=content&q=%s" },
+    { "id": "bilibili", "name": "B站", "category": "视频", "url": "https://search.bilibili.com/all?keyword=%s" },
+    { "id": "weibo", "name": "微博", "category": "社区内容", "url": "https://s.weibo.com/weibo?q=%s" },
+    { "id": "douyin", "name": "抖音", "category": "视频", "url": "https://www.douyin.com/search/%s" },
+    { "id": "github", "name": "GitHub", "category": "开发", "url": "https://github.com/search?q=%s&type=repositories" },
+    { "id": "douban", "name": "豆瓣", "category": "社区内容", "url": "https://www.douban.com/search?q=%s" },
+    { "id": "taobao", "name": "淘宝", "category": "购物", "url": "https://s.taobao.com/search?page=1&q=%s&tab=all" },
+    { "id": "jd", "name": "京东", "category": "购物", "url": "https://search.jd.com/Search?enc=utf-8&keyword=%s" },
+    { "id": "wechat", "name": "搜狗微信", "category": "社区内容", "url": "https://weixin.sogou.com/weixin?type=2&query=%s" },
+    { "id": "x", "name": "X", "category": "社区内容", "url": "https://x.com/search?q=%s&src=typed_query" },
+    { "id": "youtube", "name": "YouTube", "category": "视频", "url": "https://www.youtube.com/results?search_query=%s" }
+  ]
+}
